@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard</title>
+    <style>
+        table, td, th, tr{
+            border: 2px solid black;
+        }
+      header{
+        background-color: green;
+        /* height: 40px; */
+        padding: 12px 12px;
+      }
+        h1{
+            text-align: center;
+        }
+        header nav a {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav><a href="{% url 'banks' %}"> Add Banks</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="{% url 'home' %}"> Home</a>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'branchform' %}">Add Branch</a>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'dashboard' %}">DashBoard</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'logout' %}">Logout</a>
+    
+    </nav>
+    </header><br>
+    <h1>Welcome To The DashBoard</h1><br>
+    {% if messages %}
+<ul class="messages">
+    {% for messag in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ messag }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+    <h2>List of Banks</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Swift Code</th>
+            <th>Institution Number</th>
+            <th>Description</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        {% for b in bank %}
+        <tr>
+            <td>{{b.id}}</td>
+            <td>{{b.name}}</td>
+            <td>{{b.swift_code}}</td>
+            <td>{{b.institution_number}}</td>
+            <td>{{b.description}}</td>
+            <td><a href="{% url 'updatebank' b.pk %}">Update</a></td>
+            <td><form action="{% url 'deletebank' b.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Delete">
+            </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table><br>
+    <h2>List of Branches</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Bank Name</th>
+            <th>Branch Name</th>
+            <th>Transit Number</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Last Modefied</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        {% for br in branch %}
+        <tr>
+            <td>{{br.id}}</td>
+            <td>{{br.bank_name}}</td>
+            <td>{{br.branch_name}}</td>
+            <td>{{br.transit_number}}</td>
+            <td>{{br.address}}</td>
+            <td>{{br.email}}</td>
+            <td>{{br.last_modefied}}</td>
+            <td><a href="{% url 'updatebranch' br.pk %}">Update</a></td>
+            <td><form action="{% url 'deletebranch' br.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Delete">
+            </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>

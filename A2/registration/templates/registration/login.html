@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoginIn View</title>
+</head>
+<body>
+    <h1>Banking System</h1>
+    <h3>Please Login First</h3>
+    <form action="" method="post" >
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Login">
+    </form><br>
+    Forgot password?<a href="{% url 'passreset' %}">Reset Password</a><br>
+    <a href="{% url 'usercreation' %}">Register Yourself</a><br>
+    
+</body>
+</html>
